@@ -15,8 +15,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/go-openapi/swag"
-	"github.com/pottava/aws-s3-proxy/internal/config"
-	"github.com/pottava/aws-s3-proxy/internal/service"
+	"github.com/dineshgadge/aws-s3-proxy/internal/config"
+	"github.com/dineshgadge/aws-s3-proxy/internal/service"
 )
 
 // AwsS3 handles requests for Amazon S3
@@ -67,8 +67,9 @@ func AwsS3(w http.ResponseWriter, r *http.Request) {
 	obj, err := client.S3get(c.S3Bucket, c.S3KeyPrefix+path, rangeHeader)
 	if err != nil {
 		code, message := toHTTPError(err)
-		http.Error(w, message, code)
-		return
+		obj, err := client.S3get(c.S3Bucket, c.S3KeyPrefix+"/"+c.IndexDocument, rangeHeader)
+		// http.Error(w, message, code)
+		// return
 	}
 	setHeadersFromAwsResponse(w, obj, c.HTTPCacheControl, c.HTTPExpires)
 
