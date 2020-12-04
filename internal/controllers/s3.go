@@ -64,7 +64,7 @@ func AwsS3(w http.ResponseWriter, r *http.Request) {
 		path += c.IndexDocument
 	}
 	// Get a S3 object
-	var obj, err := client.S3get(c.S3Bucket, c.S3KeyPrefix+path, rangeHeader)
+	var obj, err = client.S3get(c.S3Bucket, c.S3KeyPrefix+path, rangeHeader)
 	if err != nil {
 
 		obj, err = client.S3get(c.S3Bucket, c.S3KeyPrefix+"/"+c.IndexDocument, rangeHeader)
