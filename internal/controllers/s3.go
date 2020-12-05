@@ -68,13 +68,11 @@ func AwsS3(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 
 		obj, err = client.S3get(c.S3Bucket, c.S3KeyPrefix+"/"+c.IndexDocument, rangeHeader)
-
 		if err != nil {
 			code, message := toHTTPError(err)
 			http.Error(w, message, code)
 			return
 		}
-
 	}
 	setHeadersFromAwsResponse(w, obj, c.HTTPCacheControl, c.HTTPExpires)
 
